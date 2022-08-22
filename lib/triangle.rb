@@ -1,27 +1,38 @@
-require 'pry'
 class Triangle
-  
-  def initialize(length1, length2, length3)
-    @length1 = length1
-    @length2 = length2
-    @length3 = length3
+  # write code here
+  def initialize (side1, side2, side3)
+    @side1=side1
+    @side2=side2
+    @side3=side3
   end
 
   def kind
-    if @length1 == @length2 and @length2 == @length3
-      :equilateral
-    elsif @length1 == @length2 or @length1 == @length3 or @length2 == @length3
-      :isosceles
-    elsif @length1 != @length2 and @length1 != @length3 and @length2 != @length3 
-      :scalene
-    elsif @length1 == 0 or @length2 ==0 or @length3== 0
+    if @side1 + @side2 > @side3 && @side1 + @side3 > @side2 && @side3 + @side2 > @side1
+
+      if @side1 > 0 && @side2 > 0 && @side3 > 0
+
+        if @side1 == @side2 && @side2 == @side3
+          :equilateral
+        elsif @side1 == @side2 || @side1 == @side3 || @side2 == @side3
+          :isosceles
+        else 
+          :scalene
+        end
+
+      else
+        raise TriangleError
+      end
+     
+    else 
       raise TriangleError
     end
+
   end
 
   class TriangleError < StandardError
+    def self.message
+      "Each side must be larger than 0 and the sum of the lengths of any two sides of a triangle always exceeds the length of the third side."
+    end
   end
-
+  
 end
-
-isosceles = Triangle.new(4,4,5)
